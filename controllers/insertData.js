@@ -19,22 +19,36 @@ const connectDB = async () => {
 };
 
 const insertData = async () => {
-  // cron scheduler to run every 2 hours
-  cron.schedule("0 */2 * * *", async () => {
-    try {
-      // Connect to MongoDB before performing any operations
-      await connectDB();
+  try {
+    //Connect to MongoDB before performing any operations
+    await connectDB();
 
-      const data = await fetchData(); // Fetching data
-      if (data) {
-        // Insert the data into the Price collection
-        await Price.insertMany(data);
-        console.log("Data inserted successfully");
-      }
-    } catch (e) {
-      console.error("Error inserting data:", e.message);
+    //Run the fetch and insert logic immediately
+    const data = await fetchData();
+    if (data) {
+      //Insert the data into the Price collection
+      await Price.insertMany(data);
+      console.log("Data inserted successfully");
     }
-  });
+
+    //Now schedule the cron job to run every 2 hours
+    cron.schedule("0 */2 * * *", async () => {
+      try {
+        console.log("Scheduled task: Fetching and inserting data...");
+
+        const scheduledData = await fetchData(); // Fetching data again
+        if (scheduledData) {
+          //Insert the data into the Price collection
+          await Price.insertMany(scheduledData);
+          console.log("Scheduled data inserted successfully");
+        }
+      } catch (e) {
+        console.error("Scheduled task error:", e.message);
+      }
+    });
+  } catch (e) {
+    console.error("Error during initial insert:", e.message);
+  }
 };
 
 export default insertData;
