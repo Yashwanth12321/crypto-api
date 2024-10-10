@@ -1,4 +1,6 @@
 import fetch from "node-fetch";
+import dotenv from "dotenv";
+dotenv.config();
 
 const fetchData = async () => {
   try {
@@ -7,7 +9,7 @@ const fetchData = async () => {
       method: "GET",
       headers: {
         accept: "application/json",
-        "x-cg-demo-api-key": "CG-sj8EzSizKQUbYxYpubEzs3T7",
+        "x-cg-demo-api-key": process.env.COINGECKO_API_KEY,
       },
     };
     const params = {

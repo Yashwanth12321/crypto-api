@@ -6,8 +6,9 @@ const app=express();
 app.use(cors());
 
 const PORT=5000;
-console.log("run executed");
+
 await insertData();
+
 
 const calculateStandardDeviation = (prices) => {
     const mean = prices.reduce((a, b) => a + b, 0) / prices.length;
@@ -17,14 +18,14 @@ const calculateStandardDeviation = (prices) => {
 
 
 app.get('/stats', async (req, res) => {
-    const { coin } = req.query; // Extract the 'coin' query parameter
+    const { coin } = req.query; 
     if (!coin) {
-      return res.status(400).json({ error: "Please provide a cryptocurrency name (e.g., ?crypto=Bitcoin)" });
+      return res.status(400).json({ error: "Please provide a cryptocurrency name (e.g., ?coin=Bitcoin)" });
     }
   
     try {
       //Find the latest entry for the requested cryptocurrency
-      const latestData = await Price.findOne({ name: coin }).sort({ Timestamp: -1 });
+      const latestData = await Price.findOne({ name: coin }).sort({ Timestamp: -1 }); // Sort in descending order of Timestamp
   
       if (!latestData) {
         return res.status(404).json({ error: `No data found for ${coin}` });
@@ -34,7 +35,6 @@ app.get('/stats', async (req, res) => {
         marketCap:latestData.marketCap,
         "24hChange":latestData.change24h,
       }
-      // Return the latest data
       res.json(required_data);
     } catch (error) {
       console.error(error);

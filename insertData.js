@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import Price from './price.js';
 import fetchData from './fetchData.js';
 import dotenv from 'dotenv';
+import cron from 'node-cron';
+
 
 dotenv.config();
 // MongoDB connection URI (you should use your actual connection string here)
@@ -18,10 +20,12 @@ const connectDB = async () => {
 };
 
 const insertData = async () => {
+cron.schedule('0 */2 * * *', async () => {
+
   try {
     // Connect to MongoDB before performing any operations
     await connectDB();
-
+    
     const data = await fetchData();  // Fetching data from some API
     if (data) {
       // Insert the data into the Price collection
@@ -31,6 +35,9 @@ const insertData = async () => {
   } catch (e) {
     console.error("Error inserting data:", e.message);
   } 
+});
+
+
     
 };
 

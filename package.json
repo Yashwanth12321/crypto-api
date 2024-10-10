@@ -15,6 +15,7 @@
     "express": "^4.21.1",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.1",
+    "node-cron": "^3.0.3",
     "node-fetch": "^2.7.0"
   }
 }
