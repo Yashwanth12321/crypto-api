@@ -17,6 +17,7 @@ const PriceSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  //required to sort wrt time
   Timestamp: {
     type: Date,
     default: Date.now,

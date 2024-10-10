@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
 
+//function to fetch data from the API
 const fetchData = async () => {
   try {
     let url = "https://api.coingecko.com/api/v3/simple/price";
@@ -17,13 +18,11 @@ const fetchData = async () => {
       vs_currencies: "usd",
       include_market_cap: true,
       include_24hr_change: true,
-      include_last_updated_at:true
+      include_last_updated_at: true,
     };
     url = new URL(url);
     url.search = new URLSearchParams(params).toString();
-    const data = await fetch(url, options).then((response) =>
-      response.json()
-    );
+    const data = await fetch(url, options).then((response) => response.json());
 
     console.log(data);
     const record = [
@@ -32,23 +31,21 @@ const fetchData = async () => {
         price: data.bitcoin.usd,
         marketCap: data.bitcoin.usd_market_cap,
         change24h: data.bitcoin.usd_24h_change,
-        Timestamp: Date.now()
-
-
+        Timestamp: Date.now(),
       },
       {
         name: "Ethereum",
         price: data.ethereum.usd,
         marketCap: data.ethereum.usd_market_cap,
         change24h: data.ethereum.usd_24h_change,
-        Timestamp: Date.now()
+        Timestamp: Date.now(),
       },
       {
         name: "Matic-Network",
-        price: data['matic-network'].usd,
-        marketCap: data['matic-network'].usd_market_cap,
-        change24h: data['matic-network'].usd_24h_change,
-        Timestamp: Date.now()
+        price: data["matic-network"].usd,
+        marketCap: data["matic-network"].usd_market_cap,
+        change24h: data["matic-network"].usd_24h_change,
+        Timestamp: Date.now(),
       },
     ];
     return record;
