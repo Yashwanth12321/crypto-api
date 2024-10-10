@@ -47,7 +47,7 @@ Use Express.js to create a RESTful API with a GET /stats and /deviation endpoint
 #### Get item
 
 ```http
-  GET /stats/?deviation={coin}
+  GET /deviation/?coin={coin}
 ```
 
 | Parameter | Type     | Description                                       |
