@@ -9,9 +9,11 @@ const fetchData = async () => {
     const options = {
       method: "GET",
       headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.COINGECKO_API_KEY,
-      },
+        'User-Agent': 'Mozilla/5.0 (compatible; MyApp/1.0; +https://crypto-api-lpas.onrender.com)',
+        accept: 'application/json',
+        ...(process.env.COINGECKO_API_KEY && { 'x-cg-demo-api-key': process.env.COINGECKO_API_KEY })
+      }
+      
     };
     const params = {
       ids: "bitcoin,ethereum,matic-network",
@@ -22,21 +24,9 @@ const fetchData = async () => {
     };
     url = new URL(url);
     url.search = new URLSearchParams(params).toString();
-    const response = await fetch(url, options);
+    const data = await fetch(url, options).then((response) => response.json());
 
-    console.log(`Status Code: ${response.status}`);
-    const contentType = response.headers.get("content-type");
-    console.log(`Content-Type: ${contentType}`);
-
-    if (!contentType || !contentType.includes("application/json")) {
-      const errorBody = await response.text();
-      console.error("Error response body:", errorBody);
-      throw new Error("Non-JSON response received.");
-    }
-
-    const data = await response.json();
-    console.log("API Data:", data);
-
+    console.log(data);
     const record = [
       {
         name: "Bitcoin",
@@ -60,11 +50,9 @@ const fetchData = async () => {
         Timestamp: Date.now(),
       },
     ];
-
     return record;
-
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
+  } catch (e) {
+    console.log(e);
     return null;
   }
 };
