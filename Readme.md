@@ -26,6 +26,9 @@ Use node-cron to run a background job every 2 hours. The cron job fetches the la
 API Endpoint:
 Use Express.js to create a RESTful API with a GET /stats and /deviation endpoint that retrieves the latest data from the MongoDB Atlas cluster and returns it in JSON format.
 
+Deployment:
+Used Render web-service for deployment
+
 ## Api Link
 
     `https://crypto-api-lpas.onrender.com`
