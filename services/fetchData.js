@@ -22,9 +22,21 @@ const fetchData = async () => {
     };
     url = new URL(url);
     url.search = new URLSearchParams(params).toString();
-    const data = await fetch(url, options).then((response) => response.json());
+    const response = await fetch(url, options);
 
-    console.log(data);
+    console.log(`Status Code: ${response.status}`);
+    const contentType = response.headers.get("content-type");
+    console.log(`Content-Type: ${contentType}`);
+
+    if (!contentType || !contentType.includes("application/json")) {
+      const errorBody = await response.text();
+      console.error("Error response body:", errorBody);
+      throw new Error("Non-JSON response received.");
+    }
+
+    const data = await response.json();
+    console.log("API Data:", data);
+
     const record = [
       {
         name: "Bitcoin",
@@ -48,9 +60,11 @@ const fetchData = async () => {
         Timestamp: Date.now(),
       },
     ];
+
     return record;
-  } catch (e) {
-    console.log(e);
+
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
     return null;
   }
 };
