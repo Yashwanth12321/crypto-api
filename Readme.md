@@ -27,18 +27,20 @@ API Endpoint:
 Use Express.js to create a RESTful API with a GET /stats and /deviation endpoint that retrieves the latest data from the MongoDB Atlas cluster and returns it in JSON format.
 
 Deployment:
-Used Render web-service for deployment
+Used aws ec2 web-service for deployment
 
 ## Api Link
 
-    `https://crypto-api-lpas.onrender.com`
+    `http://52.87.156.79:5000`
+    or
+    `http://ec2-52-87-156-79.compute-1.amazonaws.com:5000`
 
 ## API Reference
 
 #### Get all items
 
 ```http
-  GET /stats/?coin={coin}
+  GET /stats?coin={coin}
 ```
 
 | Parameter | Type     | Description                                       |
@@ -50,7 +52,7 @@ Used Render web-service for deployment
 #### Get item
 
 ```http
-  GET /deviation/?coin={coin}
+  GET /deviation?coin={coin}
 ```
 
 | Parameter | Type     | Description                                       |
