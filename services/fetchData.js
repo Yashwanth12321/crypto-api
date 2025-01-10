@@ -9,9 +9,7 @@ const fetchData = async () => {
     const options = {
       method: "GET",
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; MyApp/1.0; +https://crypto-api-lpas.onrender.com)',
-        accept: 'application/json',
-        ...(process.env.COINGECKO_API_KEY && { 'x-cg-demo-api-key': process.env.COINGECKO_API_KEY })
+        accept: 'application/json','x-cg-demo-api-key': process.env.COINGECKO_API_KEY 
       }
       
     };
@@ -22,8 +20,11 @@ const fetchData = async () => {
       include_24hr_change: true,
       include_last_updated_at: true,
     };
+    // console.log("this is 2",url)
     url = new URL(url);
+    // console.log("this is 2",url);
     url.search = new URLSearchParams(params).toString();
+    // console.log(url);
     const data = await fetch(url, options).then((response) => response.json());
 
     console.log(data);

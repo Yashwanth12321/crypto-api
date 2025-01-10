@@ -67,6 +67,7 @@ app.get("/deviation", async (req, res) => {
       .sort({ Timestamp: -1 })
       .limit(100)
       .exec();
+      
     if (!records || records.length === 0) {
       return res.status(404).json({ error: `No data found for ${coin}` });
     }
