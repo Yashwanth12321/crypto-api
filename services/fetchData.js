@@ -23,7 +23,7 @@ const fetchData = async () => {
     // console.log("this is 2",url)
     url = new URL(url);
     // console.log("this is 2",url);
-    url.search = new URLSearchParams(params).toString();
+    url.search = new URLSearchParams(params).toString(); //appending the parameters to the url
     // console.log(url);
     const data = await fetch(url, options).then((response) => response.json());
 

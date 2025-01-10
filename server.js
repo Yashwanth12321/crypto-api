@@ -49,10 +49,6 @@ app.get("/stats", async (req, res) => {
     res.status(500).json({ error: "Server error. Could not retrieve data." });
   }
 });
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
 
 //standard-devialtion endpoint
 app.get("/deviation", async (req, res) => {
@@ -67,7 +63,7 @@ app.get("/deviation", async (req, res) => {
       .sort({ Timestamp: -1 })
       .limit(100)
       .exec();
-      
+
     if (!records || records.length === 0) {
       return res.status(404).json({ error: `No data found for ${coin}` });
     }
@@ -82,4 +78,8 @@ app.get("/deviation", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Server error. Could not retrieve data." });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
